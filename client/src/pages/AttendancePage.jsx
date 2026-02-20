@@ -98,10 +98,9 @@ function AttendancePage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto lg:bg-none bg-cover bg-center bg-fixed min-h-screen"
-         style={{ backgroundImage: 'url(/RadhaMadhava_Mayapur_TV_2.JPG)' }}>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start lg:bg-transparent">
-        <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-md p-6 md:p-8 lg:bg-white lg:backdrop-blur-none">
+    <div className="max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
         <div className="text-center mb-6">
           <h2 className="text-2xl font-bold text-gray-800">Mark Attendance - One per family</h2>
           <p className="text-gray-500 mt-1">Bhagavad Gita Weekly Class</p>
@@ -240,8 +239,8 @@ function AttendancePage() {
         </form>
       </div>
 
-      {/* Radha Krishna Image - Desktop only (mobile uses background) */}
-      <div className="hidden lg:block">
+      {/* Radha Krishna Image */}
+      <div>
         <img
           src="/RadhaMadhava_Mayapur_TV_2.JPG"
           alt="Radha Madhava Mayapur"
