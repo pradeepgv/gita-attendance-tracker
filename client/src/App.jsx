@@ -8,12 +8,10 @@ function App() {
   return (
     <div className="min-h-screen bg-orange-50">
       <nav className="bg-saffron-600 shadow-lg">
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">🙏</span>
-              <h1 className="text-white font-bold text-lg">Pemulwuy - Bhagavad Gita Class Attendance</h1>
-            </div>
+        <div className="flex items-center h-20">
+          <img src="/hkccc_logo.jpg" alt="HKCCC Logo" className="h-16 w-16 rounded-full object-cover ml-4" />
+          <div className="max-w-5xl mx-auto px-4 flex items-center justify-between flex-1">
+            <h1 className="text-white font-bold text-xl">Pemulwuy - Bhagavad Gita Class Attendance</h1>
             <div className="flex gap-4">
               <Link
                 to="/"
