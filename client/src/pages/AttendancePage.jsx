@@ -101,8 +101,9 @@ function AttendancePage() {
   }
 
   return (
-    <div className="max-w-lg mx-auto">
-      <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
+    <div className="max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
         <div className="text-center mb-6">
           <h2 className="text-2xl font-bold text-gray-800">Mark Attendance</h2>
           <p className="text-gray-500 mt-1">Bhagavad Gita Weekly Class</p>
@@ -240,6 +241,16 @@ function AttendancePage() {
             {submitting ? 'Submitting...' : 'Submit Attendance'}
           </button>
         </form>
+      </div>
+
+      {/* Radha Krishna Image */}
+      <div className="hidden lg:block">
+        <img
+          src="/RadhaMadhava_Mayapur_TV_2.JPG"
+          alt="Radha Madhava Mayapur"
+          className="w-full h-auto max-h-[calc(100vh-12rem)] object-cover rounded-xl shadow-lg"
+        />
+      </div>
       </div>
     </div>
   );
