@@ -198,6 +198,7 @@ function AttendancePage() {
                 onChange={(e) =>
                   setFormData({ ...formData, adults_count: parseInt(e.target.value) || 0 })
                 }
+                onFocus={(e) => e.target.select()}
                 className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none transition ${
                   errors.adults_count ? 'border-red-400' : 'border-gray-300'
                 }`}
@@ -217,6 +218,7 @@ function AttendancePage() {
                 onChange={(e) =>
                   setFormData({ ...formData, children_count: parseInt(e.target.value) || 0 })
                 }
+                onFocus={(e) => e.target.select()}
                 className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none transition ${
                   errors.children_count ? 'border-red-400' : 'border-gray-300'
                 }`}
