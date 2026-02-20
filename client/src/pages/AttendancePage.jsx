@@ -177,7 +177,7 @@ function AttendancePage() {
               type="tel"
               value={formData.mobile}
               onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
-              placeholder="+61 412 345 678"
+              placeholder="0412 345 678"
               className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none transition ${
                 errors.mobile ? 'border-red-400' : 'border-gray-300'
               }`}
