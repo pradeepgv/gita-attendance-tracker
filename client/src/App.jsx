@@ -12,7 +12,7 @@ function App() {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
               <span className="text-2xl">🙏</span>
-              <h1 className="text-white font-bold text-lg">Gita Class Attendance</h1>
+              <h1 className="text-white font-bold text-lg">Pemulwuy - Bhagavad Gita Class Attendance</h1>
             </div>
             <div className="flex gap-4">
               <Link

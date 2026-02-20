@@ -4,7 +4,6 @@ import { searchFamilies, submitAttendance } from '../utils/api';
 function AttendancePage() {
   const [formData, setFormData] = useState({
     family_name: '',
-    email: '',
     mobile: '',
     adults_count: 1,
     children_count: 0,
@@ -52,7 +51,6 @@ function AttendancePage() {
     setFormData({
       ...formData,
       family_name: family.name,
-      email: family.email || '',
       mobile: family.mobile || '',
     });
     setShowSuggestions(false);
@@ -61,9 +59,6 @@ function AttendancePage() {
   function validate() {
     const errs = {};
     if (!formData.family_name.trim()) errs.family_name = 'Family name is required';
-    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      errs.email = 'Invalid email format';
-    }
     if (formData.mobile && !/^[+]?[\d\s-]{10,15}$/.test(formData.mobile)) {
       errs.mobile = 'Invalid mobile number (10-15 digits)';
     }
@@ -87,7 +82,7 @@ function AttendancePage() {
     try {
       await submitAttendance(formData);
       setMessage({ type: 'success', text: 'Attendance recorded successfully! Hare Krishna!' });
-      setFormData({ family_name: '', email: '', mobile: '', adults_count: 1, children_count: 0 });
+      setFormData({ family_name: '', mobile: '', adults_count: 1, children_count: 0 });
       setSelectedFamily(null);
     } catch (err) {
       if (err.status === 409) {
@@ -105,7 +100,7 @@ function AttendancePage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
         <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
         <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">Mark Attendance</h2>
+          <h2 className="text-2xl font-bold text-gray-800">Mark Attendance - One per family</h2>
           <p className="text-gray-500 mt-1">Bhagavad Gita Weekly Class</p>
         </div>
 
@@ -161,21 +156,6 @@ function AttendancePage() {
             )}
           </div>
 
-          {/* Email */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <input
-              type="email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              placeholder="family@email.com"
-              className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none transition ${
-                errors.email ? 'border-red-400' : 'border-gray-300'
-              }`}
-            />
-            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
-          </div>
-
           {/* Mobile */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
@@ -183,7 +163,7 @@ function AttendancePage() {
               type="tel"
               value={formData.mobile}
               onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
-              placeholder="+91 9876543210"
+              placeholder="+61 412 345 678"
               className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none transition ${
                 errors.mobile ? 'border-red-400' : 'border-gray-300'
               }`}
