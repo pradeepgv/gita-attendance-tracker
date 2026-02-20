@@ -1,0 +1,50 @@
+name: Keep Backend Alive
+
+on:
+  schedule:
+    # Every 10 minutes on Saturdays
+    # Will ping during class time: 5 PM - 7:30 PM AEDT (6 AM - 8:30 AM UTC)
+    - cron: '*/10 * * * 6'
+
+  # Allow manual trigger from GitHub Actions tab
+  workflow_dispatch:
+
+jobs:
+  ping-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if within class time window
+        id: check_time
+        run: |
+          # Get current UTC hour and minute
+          current_hour=$(date -u +%H)
+          current_minute=$(date -u +%M)
+
+          # Class time: 5 PM - 7:30 PM AEDT = 6:00 AM - 8:30 AM UTC
+          # Allow pings between 06:00 and 08:30 UTC
+
+          if [ $current_hour -ge 6 ] && [ $current_hour -lt 8 ]; then
+            echo "should_ping=true" >> $GITHUB_OUTPUT
+          elif [ $current_hour -eq 8 ] && [ $current_minute -le 30 ]; then
+            echo "should_ping=true" >> $GITHUB_OUTPUT
+          else
+            echo "should_ping=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Ping Render Backend
+        if: steps.check_time.outputs.should_ping == 'true'
+        run: |
+          echo "🙏 Pinging backend at $(date) - Class time window"
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://gita-attendance-tracker.onrender.com/api/families/search?query=test)
+          echo "Response code: $response"
+          if [ $response -eq 200 ] || [ $response -eq 404 ]; then
+            echo "✅ Backend is alive and responding!"
+          else
+            echo "⚠️ Backend returned unexpected status: $response"
+          fi
+
+      - name: Skip ping outside class time
+        if: steps.check_time.outputs.should_ping == 'false'
+        run: |
+          echo "⏭️ Outside class time window (5 PM - 7:30 PM AEDT) - skipping ping"
