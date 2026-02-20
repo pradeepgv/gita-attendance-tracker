@@ -4,6 +4,7 @@ import { searchFamilies, submitAttendance } from '../utils/api';
 function AttendancePage() {
   const [formData, setFormData] = useState({
     family_name: '',
+    spouse_name: '',
     mobile: '',
     adults_count: 1,
     children_count: 0,
@@ -51,6 +52,7 @@ function AttendancePage() {
     setFormData({
       ...formData,
       family_name: family.name,
+      spouse_name: family.spouse_name || '',
       mobile: family.mobile || '',
     });
     setShowSuggestions(false);
@@ -58,7 +60,7 @@ function AttendancePage() {
 
   function validate() {
     const errs = {};
-    if (!formData.family_name.trim()) errs.family_name = 'Family name is required';
+    if (!formData.family_name.trim()) errs.family_name = 'Your name is required';
     if (formData.mobile && !/^[+]?[\d\s-]{10,15}$/.test(formData.mobile)) {
       errs.mobile = 'Invalid mobile number (10-15 digits)';
     }
@@ -82,7 +84,7 @@ function AttendancePage() {
     try {
       await submitAttendance(formData);
       setMessage({ type: 'success', text: 'Attendance recorded successfully! Hare Krishna!' });
-      setFormData({ family_name: '', mobile: '', adults_count: 1, children_count: 0 });
+      setFormData({ family_name: '', spouse_name: '', mobile: '', adults_count: 1, children_count: 0 });
       setSelectedFamily(null);
     } catch (err) {
       if (err.status === 409) {
@@ -119,10 +121,10 @@ function AttendancePage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Family Name with Autocomplete */}
+          {/* Your Name with Autocomplete */}
           <div className="relative" ref={suggestionsRef}>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Family Name <span className="text-red-500">*</span>
+              Your Name <span className="text-red-500">*</span>
             </label>
             <input
               ref={inputRef}
@@ -130,7 +132,7 @@ function AttendancePage() {
               value={formData.family_name}
               onChange={handleNameChange}
               onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
-              placeholder="Start typing family name..."
+              placeholder="Start typing your name..."
               className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none transition ${
                 errors.family_name ? 'border-red-400' : 'border-gray-300'
               }`}
@@ -154,6 +156,18 @@ function AttendancePage() {
                 ))}
               </ul>
             )}
+          </div>
+
+          {/* Spouse Name */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Spouse Name</label>
+            <input
+              type="text"
+              value={formData.spouse_name}
+              onChange={(e) => setFormData({ ...formData, spouse_name: e.target.value })}
+              placeholder="Enter spouse name"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 outline-none transition"
+            />
           </div>
 
           {/* Mobile */}

@@ -5,7 +5,7 @@ const supabase = require('../utils/supabase');
 // Submit attendance
 router.post('/', async (req, res) => {
   try {
-    const { family_name, email, mobile, adults_count, children_count } = req.body;
+    const { family_name, spouse_name, email, mobile, adults_count, children_count } = req.body;
 
     if (!family_name || !family_name.trim()) {
       return res.status(400).json({ error: 'Family name is required' });
@@ -44,6 +44,7 @@ router.post('/', async (req, res) => {
       const updates = {};
       if (email) updates.email = email;
       if (mobile) updates.mobile = mobile;
+      if (spouse_name) updates.spouse_name = spouse_name;
 
       if (Object.keys(updates).length > 0) {
         const { data, error } = await supabase
@@ -60,7 +61,7 @@ router.post('/', async (req, res) => {
     } else {
       const { data, error } = await supabase
         .from('families')
-        .insert({ name: family_name.trim(), email, mobile })
+        .insert({ name: family_name.trim(), email, mobile, spouse_name })
         .select()
         .single();
       if (error) throw error;

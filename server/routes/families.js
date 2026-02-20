@@ -44,7 +44,7 @@ router.get('/:id', async (req, res) => {
 // Create a new family
 router.post('/', async (req, res) => {
   try {
-    const { name, email, mobile } = req.body;
+    const { name, email, mobile, spouse_name } = req.body;
 
     if (!name || !name.trim()) {
       return res.status(400).json({ error: 'Family name is required' });
@@ -72,6 +72,7 @@ router.post('/', async (req, res) => {
         .update({
           email: email || existing.email,
           mobile: mobile || existing.mobile,
+          spouse_name: spouse_name || existing.spouse_name,
         })
         .eq('id', existing.id)
         .select()
@@ -84,7 +85,7 @@ router.post('/', async (req, res) => {
     // Create new family
     const { data, error } = await supabase
       .from('families')
-      .insert({ name: name.trim(), email, mobile })
+      .insert({ name: name.trim(), email, mobile, spouse_name })
       .select()
       .single();
 
