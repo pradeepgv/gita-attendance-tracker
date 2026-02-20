@@ -240,7 +240,7 @@ function AttendancePage() {
       </div>
 
       {/* Radha Krishna Image */}
-      <div className="hidden lg:block">
+      <div>
         <img
           src="/RadhaMadhava_Mayapur_TV_2.JPG"
           alt="Radha Madhava Mayapur"
