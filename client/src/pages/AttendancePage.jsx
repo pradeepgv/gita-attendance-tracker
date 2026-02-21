@@ -102,7 +102,7 @@ function AttendancePage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
         <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
         <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">Mark Attendance - One per family</h2>
+          <h2 className="text-2xl font-bold text-gray-800">Mark Attendance - <span className="text-red-600">One per family</span></h2>
           <p className="text-gray-500 mt-1">Bhagavad Gita Weekly Class</p>
         </div>
 
