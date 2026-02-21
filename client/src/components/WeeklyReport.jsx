@@ -113,7 +113,8 @@ function WeeklyReport({ password }) {
                 <table className="w-full text-sm">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th className="text-left px-4 py-3 font-medium text-gray-600">Family</th>
+                      <th className="text-left px-4 py-3 font-medium text-gray-600">Name</th>
+                      <th className="text-left px-4 py-3 font-medium text-gray-600">Spouse Name</th>
                       <th className="text-left px-4 py-3 font-medium text-gray-600">Date</th>
                       <th className="text-center px-4 py-3 font-medium text-gray-600">Adults</th>
                       <th className="text-center px-4 py-3 font-medium text-gray-600">Children</th>
@@ -125,6 +126,9 @@ function WeeklyReport({ password }) {
                       <tr key={r.id} className="hover:bg-gray-50">
                         <td className="px-4 py-3 font-medium text-gray-800">
                           {r.families?.name}
+                        </td>
+                        <td className="px-4 py-3 text-gray-600">
+                          {r.families?.spouse_name || '—'}
                         </td>
                         <td className="px-4 py-3 text-gray-600">{r.date}</td>
                         <td className="px-4 py-3 text-center">{r.adults_count}</td>

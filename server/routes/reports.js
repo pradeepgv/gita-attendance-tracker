@@ -22,7 +22,7 @@ router.get('/weekly', adminAuth, async (req, res) => {
 
     const { data, error } = await supabase
       .from('attendance')
-      .select('*, families(name, email, mobile)')
+      .select('*, families(name, spouse_name, email, mobile)')
       .gte('date', startStr)
       .lte('date', endStr)
       .order('date', { ascending: false });
