@@ -149,9 +149,6 @@ function AttendancePage() {
                     className="px-4 py-2.5 hover:bg-saffron-50 cursor-pointer border-b border-gray-100 last:border-0"
                   >
                     <span className="font-medium text-gray-800">{family.name}</span>
-                    {family.mobile && (
-                      <span className="text-gray-400 text-sm ml-2">{family.mobile}</span>
-                    )}
                   </li>
                 ))}
               </ul>
