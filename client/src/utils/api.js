@@ -56,6 +56,20 @@ export function getAbsentFamilies(password) {
   });
 }
 
+export function getDuplicateFamilies(password) {
+  return request('/families/duplicates', {
+    headers: { 'x-admin-password': password },
+  });
+}
+
+export function mergeFamilies(password, keepId, discardId) {
+  return request('/families/merge', {
+    method: 'POST',
+    headers: { 'x-admin-password': password },
+    body: JSON.stringify({ keep_id: keepId, discard_id: discardId }),
+  });
+}
+
 export function getAttendanceMatrix(password, startDate, endDate) {
   let url = `/reports/matrix?`;
   if (startDate) url += `start_date=${startDate}&`;
