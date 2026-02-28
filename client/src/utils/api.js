@@ -56,6 +56,15 @@ export function getAbsentFamilies(password) {
   });
 }
 
+export function getAttendanceMatrix(password, startDate, endDate) {
+  let url = `/reports/matrix?`;
+  if (startDate) url += `start_date=${startDate}&`;
+  if (endDate) url += `end_date=${endDate}`;
+  return request(url, {
+    headers: { 'x-admin-password': password },
+  });
+}
+
 export function exportCSV(password, startDate, endDate) {
   let url = `/reports/export?`;
   if (startDate) url += `start_date=${startDate}&`;

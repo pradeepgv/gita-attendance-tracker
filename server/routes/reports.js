@@ -146,4 +146,69 @@ router.get('/export', adminAuth, async (req, res) => {
   }
 });
 
+// Get attendance matrix (all families x all Saturdays in range)
+router.get('/matrix', adminAuth, async (req, res) => {
+  try {
+    const today = new Date();
+    const ninetyDaysAgo = new Date(today);
+    ninetyDaysAgo.setUTCDate(today.getUTCDate() - 90);
+
+    const startStr = req.query.start_date || ninetyDaysAgo.toISOString().split('T')[0];
+    const endStr = req.query.end_date || today.toISOString().split('T')[0];
+
+    // Generate all Saturdays in range (UTC dates)
+    const saturdays = [];
+    const startDate = new Date(startStr + 'T00:00:00Z');
+    const endDate = new Date(endStr + 'T00:00:00Z');
+    const daysToFirstSat = (6 - startDate.getUTCDay() + 7) % 7;
+    const current = new Date(startDate);
+    current.setUTCDate(startDate.getUTCDate() + daysToFirstSat);
+    while (current <= endDate) {
+      saturdays.push(current.toISOString().split('T')[0]);
+      current.setUTCDate(current.getUTCDate() + 7);
+    }
+    const saturdaySet = new Set(saturdays);
+
+    // Fetch all families
+    const { data: families, error: famErr } = await supabase
+      .from('families')
+      .select('id, name, spouse_name, mobile')
+      .order('name');
+    if (famErr) throw famErr;
+
+    // Fetch all attendance records in range
+    const { data: attendance, error: attErr } = await supabase
+      .from('attendance')
+      .select('family_id, date')
+      .gte('date', startStr)
+      .lte('date', endStr);
+    if (attErr) throw attErr;
+
+    // Map each attendance date to its week's Saturday, keep only Saturdays in range
+    const attendanceMap = {};
+    for (const record of attendance) {
+      const d = new Date(record.date + 'T00:00:00Z');
+      const daysToSat = (6 - d.getUTCDay() + 7) % 7;
+      const sat = new Date(d);
+      sat.setUTCDate(d.getUTCDate() + daysToSat);
+      const satStr = sat.toISOString().split('T')[0];
+      if (!saturdaySet.has(satStr)) continue;
+      if (!attendanceMap[record.family_id]) attendanceMap[record.family_id] = new Set();
+      attendanceMap[record.family_id].add(satStr);
+    }
+
+    const result = families.map((f) => ({
+      id: f.id,
+      name: f.name,
+      spouse_name: f.spouse_name || null,
+      mobile: f.mobile || null,
+      attended_dates: Array.from(attendanceMap[f.id] || []),
+    }));
+
+    res.json({ saturdays, families: result });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;

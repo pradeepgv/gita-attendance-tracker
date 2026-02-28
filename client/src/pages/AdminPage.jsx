@@ -3,6 +3,7 @@ import LoginForm from '../components/LoginForm';
 import WeeklyReport from '../components/WeeklyReport';
 import FamilyHistory from '../components/FamilyHistory';
 import AbsenceAlerts from '../components/AbsenceAlerts';
+import AttendanceMatrix from '../components/AttendanceMatrix';
 
 function AdminPage() {
   const [password, setPassword] = useState('');
@@ -17,6 +18,7 @@ function AdminPage() {
     { id: 'weekly', label: 'Weekly Report' },
     { id: 'family', label: 'Family History' },
     { id: 'alerts', label: 'Follow-up Alerts' },
+    { id: 'matrix', label: 'Attendance Matrix' },
   ];
 
   return (
@@ -50,6 +52,7 @@ function AdminPage() {
       {activeTab === 'weekly' && <WeeklyReport password={password} />}
       {activeTab === 'family' && <FamilyHistory password={password} />}
       {activeTab === 'alerts' && <AbsenceAlerts password={password} />}
+      {activeTab === 'matrix' && <AttendanceMatrix password={password} />}
     </div>
   );
 }
