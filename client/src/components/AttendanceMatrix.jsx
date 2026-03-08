@@ -12,7 +12,7 @@ function getDefaultDates() {
   const now = new Date();
   const end = now.toISOString().split('T')[0];
   const start = new Date(now);
-  start.setDate(now.getDate() - 90);
+  start.setDate(now.getDate() - 14);
   return { start: start.toISOString().split('T')[0], end };
 }
 
