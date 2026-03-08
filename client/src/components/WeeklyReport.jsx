@@ -115,6 +115,7 @@ function WeeklyReport({ password }) {
                     <tr>
                       <th className="text-left px-4 py-3 font-medium text-gray-600">Name</th>
                       <th className="text-left px-4 py-3 font-medium text-gray-600">Spouse Name</th>
+                      <th className="text-left px-4 py-3 font-medium text-gray-600">Mobile</th>
                       <th className="text-left px-4 py-3 font-medium text-gray-600">Date</th>
                       <th className="text-center px-4 py-3 font-medium text-gray-600">Adults</th>
                       <th className="text-center px-4 py-3 font-medium text-gray-600">Children</th>
@@ -122,13 +123,16 @@ function WeeklyReport({ password }) {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-100">
-                    {report.records.map((r) => (
+                    {[...report.records].sort((a, b) => (a.families?.name || '').localeCompare(b.families?.name || '')).map((r) => (
                       <tr key={r.id} className="hover:bg-gray-50">
                         <td className="px-4 py-3 font-medium text-gray-800">
                           {r.families?.name}
                         </td>
                         <td className="px-4 py-3 text-gray-600">
                           {r.families?.spouse_name || '—'}
+                        </td>
+                        <td className="px-4 py-3 text-gray-600">
+                          {r.families?.mobile || '—'}
                         </td>
                         <td className="px-4 py-3 text-gray-600">{r.date}</td>
                         <td className="px-4 py-3 text-center">{r.adults_count}</td>
