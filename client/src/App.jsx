@@ -2,6 +2,9 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import AttendancePage from './pages/AttendancePage';
 import AdminPage from './pages/AdminPage';
 
+const API_BASE = import.meta.env.VITE_API_URL || '/api';
+function pingBackend() { fetch(`${API_BASE}/health`).catch(() => {}); }
+
 function App() {
   const location = useLocation();
 
@@ -25,6 +28,7 @@ function App() {
               </Link>
               <Link
                 to="/admin"
+                onClick={pingBackend}
                 className={`px-3 py-2 rounded text-sm font-medium transition-colors ${
                   location.pathname === '/admin'
                     ? 'bg-saffron-700 text-white'
